@@ -32,8 +32,8 @@ public class Job implements IUniformView {
    * finer shaded information, you should visit the other nodes.
    */
   public Timestamp statusCounts;
-  private transient Vertex[] vertices;
-  private transient Plan plan;
+  private Vertex[] vertices;
+  private Plan plan;
 
   public RawNode[] getRawNodes() {
     return plan.getNodes();

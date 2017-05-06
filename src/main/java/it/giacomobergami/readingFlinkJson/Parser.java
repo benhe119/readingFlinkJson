@@ -12,15 +12,14 @@ import java.nio.file.Files;
 public class Parser {
 
   public static void main(String args[]) throws Exception {
-    // File where the compiler plan is stored
-    String compilerPlan = new String(Files.readAllBytes(new File(args[0]).toPath()));
-    String flinkLocalHost = args[1];
-    String jobId = args[2];
-
-    ComputationGraph cg = ResolveQuery.getComputationGraph(flinkLocalHost, compilerPlan, jobId);
-
-    cg.toJsonString();
-
+    String compilerPlan = new String(Files.readAllBytes(new File
+      ("/Users/vasistas/RVFOverSerializedData_slaves=0_parall" +
+        "=1_size" +
+        "=ciccio.json").toPath()));
+    ResolveQuery resolveQuery = new ResolveQuery("http://localhost:8081/");
+    ComputationGraph cg =  resolveQuery.getFullPlan(compilerPlan,
+      "90a6593d1d7413c38ca8eeda23f6297f");
+    System.out.println(cg.toString());
 
   }
 

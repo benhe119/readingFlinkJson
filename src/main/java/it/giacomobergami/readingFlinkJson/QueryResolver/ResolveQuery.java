@@ -33,7 +33,7 @@ public class ResolveQuery {
     return sb.toString();
   }
 
-  private ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
+  public ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
     ComputationGraph toret =  ComputationGraph
       .createComputationGraphFromCompilerHint(jsonQueryPlan)
       .updateComputationGraphFromAjaxQuery(getQueryResult("/jobs/"+jobId+"/vertices"));

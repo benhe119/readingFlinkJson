@@ -12,7 +12,7 @@ public class Metric {
   @SerializedName("write-bytes")
   public long writedBytes;
 
-  @SerializedName("read-record")
+  @SerializedName("read-records")
   public long readedRecords;
 
   @SerializedName("write-records")

@@ -7,20 +7,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum NodeType {
   @SerializedName("pact")
-  PACT("pact"),
+  PACT,
 
   @SerializedName("source")
-  SOURCE("source"),
+  SOURCE,
 
   @SerializedName("sink")
-  SINK("sink");
-
-  public String getNodeType() {
-    return nodeType;
-  }
-
-  private String nodeType;
-  NodeType(String value) {
-    nodeType = value;
-  }
+  SINK;
 }

@@ -1,22 +1,24 @@
-package it.giacomobergami.readingFlinkJson.nodes;
+package it.giacomobergami.readingFlinkJson.node;
 
 import it.giacomobergami.readingFlinkJson.Predecessor;
+import it.giacomobergami.readingFlinkJson.Utils;
 import it.giacomobergami.readingFlinkJson.namevalues.CompilerHints;
 import it.giacomobergami.readingFlinkJson.namevalues.Costs;
 import it.giacomobergami.readingFlinkJson.namevalues.Estimates;
 import it.giacomobergami.readingFlinkJson.namevalues.GlobalProperties;
 import it.giacomobergami.readingFlinkJson.namevalues.LocalProperties;
+import it.giacomobergami.readingFlinkJson.nodes.NodeType;
 
 /**
  * Created by vasistas on 20/04/17.
  */
 public class Node {
-  public int id;
-  public String jid;
-  String type;
-  String pact;
-  String contents;
-  String parallelism;
+  public int id; //
+  public String jid; //
+  String type; //
+  String pact; //
+  String contents; //
+  String parallelism; //
   String driverStrategy;
   GlobalProperties globalProperties;
   LocalProperties localProperties;
@@ -74,5 +76,12 @@ public class Node {
   @Override
   public int hashCode() {
     return id;
+  }
+
+  public void updateWith(Node node) {
+    id = Utils.checkAssignEqual(id, node.id);
+    jid = Utils.checkAssignEqual(jid, node.jid);
+    this.type = node.type;
+    this.pact = node.pact;
   }
 }

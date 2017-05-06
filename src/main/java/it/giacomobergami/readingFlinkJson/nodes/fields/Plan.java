@@ -1,7 +1,7 @@
 package it.giacomobergami.readingFlinkJson.nodes.fields;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.nodes.RawNode;
+import it.giacomobergami.readingFlinkJson.node.RawNode;
 
 /**
  * Defining a query plan.

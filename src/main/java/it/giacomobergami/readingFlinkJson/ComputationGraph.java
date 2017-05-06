@@ -2,10 +2,10 @@ package it.giacomobergami.readingFlinkJson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.giacomobergami.readingFlinkJson.nodes.Node;
-import it.giacomobergami.readingFlinkJson.nodes.RawNode;
+import it.giacomobergami.readingFlinkJson.node.Node;
+import it.giacomobergami.readingFlinkJson.node.RawNode;
 import it.giacomobergami.readingFlinkJson.nodes.Job;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Vertex;
+import it.giacomobergami.readingFlinkJson.node.Vertex;
 import javafx.util.Pair;
 
 import java.lang.reflect.Type;
@@ -70,6 +70,28 @@ public class ComputationGraph {
       }
     }
     return new ComputationGraph(nodeHashMap, null, null);
+  }
+
+  public ComputationGraph updateComputationGraphFromAjaxQuery(String json) {
+    Gson gson = new Gson();
+    Type fileType = new TypeToken<Job>(){}.getType();
+    jidConversion = new HashMap<>();
+    originalInformation = gson.fromJson(json, fileType);
+    int y = 0;
+    for (RawNode x: originalInformation.getRawNodes()) {
+      jidConversion.put(x.id, y);
+      nodeHashMap.get(y).updateWith(new Node(y, x));
+      y++;
+    }
+    for (Integer key : nodeHashMap.keySet()) {
+      Node n = nodeHashMap.get(key);
+      if (n.predecessors != null && n.predecessors.length > 0) {
+        for (int i=0; i<n.predecessors.length; i++) {
+          n.predecessors[i].parsedNode = nodeHashMap.get(n.predecessors[i].jid);
+        }
+      }
+    }
+    return this;
   }
 
   public static ComputationGraph createComputationGraphFromAjaxQuery(String json) {

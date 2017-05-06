@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.giacomobergami.readingFlinkJson.ComputationGraph;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Vertex;
+import it.giacomobergami.readingFlinkJson.node.Vertex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ResolveQuery {
     this.gson = new GsonBuilder().create();
   }
 
-  private String resolveURL(String fullPath) throws IOException {
+  private String getQueryResult(String fullPath) throws IOException {
     URL url = new URL(new URL(remoteSeriviceHostWithPort), fullPath);
     BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
     String strTemp = "";
@@ -36,8 +36,14 @@ public class ResolveQuery {
     return sb.toString();
   }
 
-  public ComputationGraph resolveComputationGraph(String jobId) throws IOException {
-    String json = resolveURL("/jobs/"+jobId+"/vertices");
+  public ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
+    return ComputationGraph
+      .createComputationGraphFromCompilerHint(jsonQueryPlan)
+      .updateComputationGraphFromAjaxQuery(getQueryResult("/jobs/"+jobId+"/vertices"));
+  }
+
+  public ComputationGraph resolveRemoveComputationGraph(String jobId) throws IOException {
+    String json = getQueryResult("/jobs/"+jobId+"/vertices");
     ComputationGraph toret = ComputationGraph.createComputationGraphFromAjaxQuery(json);
     Vertex[] vertices = toret.getVertices();
     for (int i=0; i<vertices.length; i++) {
@@ -47,12 +53,12 @@ public class ResolveQuery {
   }
 
   public void updateVertex(String jobId, Vertex toUpdateWithSubtasks) throws IOException  {
-    String json = resolveURL("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId());
+    String json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId());
     Type fileType = new TypeToken<Vertex>(){}.getType();
     Vertex l = gson.fromJson(json, fileType);
     toUpdateWithSubtasks.setSubtasks(l.getSubtasks());
 
-    json = resolveURL("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId() + "/subtasktimes");
+    json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId() + "/subtasktimes");
     l = gson.fromJson(json, fileType);
     toUpdateWithSubtasks.updateSubtaskWithTimestamp(l.getSubtasks());
   }

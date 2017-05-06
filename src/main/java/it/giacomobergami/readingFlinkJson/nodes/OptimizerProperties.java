@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class OptimizerProperties {
   @SerializedName("global_properties")
-  List<JSONNameValue> globalProperties;
+  public List<JSONNameValue> globalProperties;
 
   @SerializedName("local_properties")
-  List<JSONNameValue> localProperties;
+  public List<JSONNameValue> localProperties;
 
-  List<JSONNameValue> estimates;
-  List<JSONNameValue> costs;
+  public List<JSONNameValue> estimates;
+  public List<JSONNameValue> costs;
 
   @SerializedName("compiler_hints")
-  List<JSONNameValue> compilerHints;
+  public List<JSONNameValue> compilerHints;
 }

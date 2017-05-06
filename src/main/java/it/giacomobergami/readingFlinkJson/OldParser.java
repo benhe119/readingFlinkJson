@@ -1,7 +1,7 @@
 package it.giacomobergami.readingFlinkJson;
 
 import it.giacomobergami.readingFlinkJson.csv.CsvWriter;
-import it.giacomobergami.readingFlinkJson.nodes.Node;
+import it.giacomobergami.readingFlinkJson.node.Node;
 
 import java.io.File;
 import java.io.IOException;

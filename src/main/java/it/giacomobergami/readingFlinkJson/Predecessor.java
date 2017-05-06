@@ -1,7 +1,8 @@
 package it.giacomobergami.readingFlinkJson;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.nodes.Node;
+import it.giacomobergami.readingFlinkJson.node.Node;
 
 import java.util.Map;
 
@@ -15,10 +16,10 @@ public class Predecessor {
    * dependingly on the data
    */
   @SerializedName("id")
-  private String jid;
+  public String jid;
 
   /**
-   * Part of the computation where the information comes from
+   * Defines from which side of the computation the predecessor comes from
    */
   String side;
 
@@ -28,6 +29,7 @@ public class Predecessor {
   /**
    * Reference to the parsed element
    */
+  @Expose(serialize = false, deserialize = false)
   Node parsedNode;
 
   /**

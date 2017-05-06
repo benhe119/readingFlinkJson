@@ -1,8 +1,10 @@
-package it.giacomobergami.readingFlinkJson.nodes;
+package it.giacomobergami.readingFlinkJson.node;
 
 import com.google.gson.annotations.SerializedName;
 import it.giacomobergami.readingFlinkJson.namevalues.JSONNameValue;
 import it.giacomobergami.readingFlinkJson.Predecessor;
+import it.giacomobergami.readingFlinkJson.nodes.NodeType;
+import it.giacomobergami.readingFlinkJson.nodes.OptimizerProperties;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class RawNode {
    * Type of the task associated to the node. It could be either source, sink or
    * pact, meaning that it is an intermediate node.
    */
-  public NodeType type;
+  public String type;
 
   /**
    * Defining the type of the task run by the element

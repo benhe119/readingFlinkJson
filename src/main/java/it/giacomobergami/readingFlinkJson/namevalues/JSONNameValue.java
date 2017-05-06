@@ -1,7 +1,8 @@
-package it.giacomobergami.readingFlinkJson;
+package it.giacomobergami.readingFlinkJson.namevalues;
 
 /**
- * Created by vasistas on 20/04/17.
+ * Apache Flink sometimes could represent the property-values associations in this
+ * way. This representation has then to be packed into another representation
  */
 public class JSONNameValue {
   String name;
@@ -16,15 +17,7 @@ public class JSONNameValue {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getValue() {
     return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
   }
 }

@@ -1,23 +1,54 @@
 package it.giacomobergami.readingFlinkJson.nodes;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.JSONNameValue;
+import it.giacomobergami.readingFlinkJson.namevalues.JSONNameValue;
 import it.giacomobergami.readingFlinkJson.Predecessor;
 
 import java.util.List;
 
 /**
- * Created by vasistas on 20/04/17.
+ * Raw informations to be associated to the node
  */
 public class RawNode {
+
+  /**
+   * Representation of a node within the computation graph. Dependingly on the different
+   * possible formats, it could be either a string or an integer
+   */
   public String id;
-  String type;
+
+  /**
+   * Type of the task associated to the node. It could be either source, sink or
+   * pact, meaning that it is an intermediate node.
+   */
+  public NodeType type;
+
+  /**
+   * Defining the type of the task run by the element
+   */
   String pact;
+
+  /**
+   * Defining the part of the code run by this node
+   */
   String contents;
+
+  /**
+   * Parallelism level set at this stage
+   */
   String parallelism;
+
+  /**
+   * Computational strategy adopted by Flink
+   */
   @SerializedName("driver_strategy")
   String driverStrategy;
 
+  /**
+   * Dependingly on the representation and format, the optimizer properties
+   * could be expressed within the current variable or within @code{globalProperties},
+   * @code{localProperties}, @code{estimates}, @code{costs} and @code{compilerHints}
+   */
   @SerializedName("optimizer_properties")
   private OptimizerProperties optimizerProperties;
 

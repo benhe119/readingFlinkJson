@@ -7,37 +7,37 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Timestamp {
   @SerializedName("CREATED")
-  private long created;
+  public long created;
 
   @SerializedName("DEPLOYING")
-  private long deploying;
+  public long deploying;
 
   @SerializedName("SCHEDULED")
-  private long scheduled;
+  public long scheduled;
 
   @SerializedName("RUNNING")
-  private long running;
+  public long running;
 
   @SerializedName("FAILING")
-  private long failing;
+  public long failing;
 
   @SerializedName("FAILED")
-  private long failed;
+  public long failed;
 
   @SerializedName(value = "CANCELLING", alternate = {"CANCELING"})
-  private long cancelling;
+  public long cancelling;
 
   @SerializedName("CANCELED")
-  private long canceled;
+  public long canceled;
 
   @SerializedName("FINISHED")
-  private long finished;
+  public long finished;
 
   @SerializedName("RESTARTING")
-  private long restarting;
+  public long restarting;
 
   @SerializedName("SUSPENDED")
-  private long suspended;
+  public long suspended;
 
   private long getActualRunningTime() {
     return finished - running;

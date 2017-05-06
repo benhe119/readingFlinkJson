@@ -3,9 +3,10 @@ package it.giacomobergami.readingFlinkJson.nodes.fields;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Defining a subtask within each vertex or node.
  */
 public class Subtask {
+
   private long subtask;
 
   private String status;
@@ -20,6 +21,9 @@ public class Subtask {
   @SerializedName("end-time")
   private long endTime;
 
+  /**
+   * Difference between start time and end time
+   */
   private long duration;
 
   private Metric metric;

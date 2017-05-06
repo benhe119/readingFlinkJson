@@ -1,12 +1,12 @@
 package it.giacomobergami.readingFlinkJson.nodes;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.JSONNameValue;
+import it.giacomobergami.readingFlinkJson.namevalues.JSONNameValue;
 
 import java.util.List;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Grouped properties associated to the computation node
  */
 public class OptimizerProperties {
   @SerializedName("global_properties")

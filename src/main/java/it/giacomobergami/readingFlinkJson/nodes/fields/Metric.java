@@ -3,18 +3,18 @@ package it.giacomobergami.readingFlinkJson.nodes.fields;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Metrics that could be obtained for each Node/Vertex or subtask performing a computation
  */
 public class Metric {
   @SerializedName("read-bytes")
-  private long readedBytes;
+  public long readedBytes;
 
   @SerializedName("write-bytes")
-  private long writedBytes;
+  public long writedBytes;
 
   @SerializedName("read-record")
-  private long readedRecords;
+  public long readedRecords;
 
   @SerializedName("write-records")
-  private long writedRecords;
+  public long writedRecords;
 }

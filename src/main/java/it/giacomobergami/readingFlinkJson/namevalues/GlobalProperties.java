@@ -1,8 +1,6 @@
 package it.giacomobergami.readingFlinkJson.namevalues;
 
 
-import it.giacomobergami.readingFlinkJson.JSONNameValue;
-
 import java.util.List;
 
 /**

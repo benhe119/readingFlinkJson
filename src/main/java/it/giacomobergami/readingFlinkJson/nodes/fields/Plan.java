@@ -4,16 +4,20 @@ import com.google.gson.annotations.SerializedName;
 import it.giacomobergami.readingFlinkJson.nodes.RawNode;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Defining a query plan.
  */
 public class Plan {
+  /**
+   * The id could represent either an exadecimal string or an integer,
+   * dependingly on the used format
+   */
   @SerializedName(value = "jid", alternate = {"id"})
-  private String jid;
+  public String jid;
 
   /**
    * Name associated to the process
    */
-  private String name;
+  public String name;
 
   /**
    * Raw information associated to the nodes

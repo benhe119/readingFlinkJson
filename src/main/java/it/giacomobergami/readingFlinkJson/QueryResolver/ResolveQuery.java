@@ -1,7 +1,5 @@
 package it.giacomobergami.readingFlinkJson.QueryResolver;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.giacomobergami.readingFlinkJson.ComputationGraph;
 import it.giacomobergami.readingFlinkJson.GsonCommon;
@@ -14,14 +12,14 @@ import java.lang.reflect.Type;
 import java.net.URL;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Query resolver for Apache Flink, in order to get runtime information
  */
 public class ResolveQuery {
 
   private String remoteSeriviceHostWithPort;
 
-  public ResolveQuery(String remoteSeriviceHostWithPort) {
-    this.remoteSeriviceHostWithPort = remoteSeriviceHostWithPort;
+  public ResolveQuery(String flinkIpWithPort) {
+    this.remoteSeriviceHostWithPort = flinkIpWithPort;
   }
 
   private String getQueryResult(String fullPath) throws IOException {
@@ -35,14 +33,10 @@ public class ResolveQuery {
     return sb.toString();
   }
 
-  public ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
+  private ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
     ComputationGraph toret =  ComputationGraph
       .createComputationGraphFromCompilerHint(jsonQueryPlan)
       .updateComputationGraphFromAjaxQuery(getQueryResult("/jobs/"+jobId+"/vertices"));
-    /*Vertex[] vertices = toret.getVertices();
-    for (int i=0; i<vertices.length; i++) {
-      updateVertexInformationWithFurtherQueries(jobId, vertices[i]);
-    }*/
     int len = toret.getNumberOfNodes();
     for (int i=0; i<len; i++) {
       updateVertexInformationWithFurtherQueries(jobId, toret, i);
@@ -50,17 +44,12 @@ public class ResolveQuery {
     return toret;
   }
 
-  public ComputationGraph resolveRemoveComputationGraph(String jobId) throws IOException {
-    String json = getQueryResult("/jobs/"+jobId+"/vertices");
-    ComputationGraph toret = ComputationGraph.createComputationGraphFromAjaxQuery(json);
-    int len = toret.getNumberOfNodes();
-    for (int i=0; i<len; i++) {
-      updateVertexInformationWithFurtherQueries(jobId, toret, i);
-    }
-    return toret;
+  public static ComputationGraph getComputationGraph(String flinkIpWithPort, String
+    jsonCompilerQueryPlan, String jobId) throws IOException {
+    return new ResolveQuery(flinkIpWithPort).getFullPlan(jsonCompilerQueryPlan, jobId);
   }
 
-  public void updateVertexInformationWithFurtherQueries(String jobId, ComputationGraph toret, int
+  private void updateVertexInformationWithFurtherQueries(String jobId, ComputationGraph toret, int
     pos)
     throws IOException  {
 
@@ -73,19 +62,6 @@ public class ResolveQuery {
     json = getQueryResult("/jobs/"+jobId+"/vertices/" + nodeJid + "/subtasktimes");
     l = GsonCommon.GSON.fromJson(json, fileType);
     toret.updateVertexInPosWithSubtasksWithTimestamp(pos, l.getSubtasks());
-  }
-
-  public void updateVertexInformationWithFurtherQueries(String jobId, Vertex toUpdateWithSubtasks)
-    throws IOException  {
-
-    String json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId());
-    Type fileType = new TypeToken<Vertex>(){}.getType();
-    Vertex l = GsonCommon.GSON.fromJson(json, fileType);
-    toUpdateWithSubtasks.setSubtasks(l.getSubtasks());
-
-    json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId() + "/subtasktimes");
-    l = GsonCommon.GSON.fromJson(json, fileType);
-    toUpdateWithSubtasks.updateSubtaskWithTimestamp(l.getSubtasks());
   }
 
 }

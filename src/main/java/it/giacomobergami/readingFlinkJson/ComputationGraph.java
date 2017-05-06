@@ -353,4 +353,8 @@ public class ComputationGraph {
   public int getNumberOfNodes() {
     return originalInformation.getVertexViewSize();
   }
+
+  public String toJsonString() {
+    return toString();
+  }
 }

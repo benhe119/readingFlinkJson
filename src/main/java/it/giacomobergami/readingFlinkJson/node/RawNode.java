@@ -1,10 +1,9 @@
 package it.giacomobergami.readingFlinkJson.node;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.namevalues.JSONNameValue;
-import it.giacomobergami.readingFlinkJson.Predecessor;
-import it.giacomobergami.readingFlinkJson.nodes.NodeType;
-import it.giacomobergami.readingFlinkJson.nodes.OptimizerProperties;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.JSONNameValue;
+import it.giacomobergami.readingFlinkJson.node.fields.Predecessor;
+import it.giacomobergami.readingFlinkJson.node.fields.OptimizerProperties;
 
 import java.util.List;
 

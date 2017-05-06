@@ -1,22 +1,21 @@
 package it.giacomobergami.readingFlinkJson.node;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.Predecessor;
 import it.giacomobergami.readingFlinkJson.Utils;
-import it.giacomobergami.readingFlinkJson.namevalues.CompilerHints;
-import it.giacomobergami.readingFlinkJson.namevalues.Costs;
-import it.giacomobergami.readingFlinkJson.namevalues.Estimates;
-import it.giacomobergami.readingFlinkJson.namevalues.GlobalProperties;
-import it.giacomobergami.readingFlinkJson.namevalues.LocalProperties;
-import it.giacomobergami.readingFlinkJson.nodes.NodeType;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Metric;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Subtask;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Timestamp;
+import it.giacomobergami.readingFlinkJson.node.fields.Predecessor;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.CompilerHints;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Costs;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Estimates;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.GlobalProperties;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.LocalProperties;
+import it.giacomobergami.readingFlinkJson.node.fields.Metric;
+import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
+import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
 /**
  * Unifying the Node and Vertex information into one
  */
-public class NodeVertex {
+public class NodeVertex implements INode {
   //// IDENTIFICATION
   public int id;
   public String jobId;
@@ -79,5 +78,70 @@ public class NodeVertex {
     this.estimates = n.estimates;
     this.costs = n.costs;
     this.compilerHints = n.compilerHints;
+  }
+
+  @Override
+  public int getId() {
+    return id;
+  }
+
+  @Override
+  public String getJid() {
+    return jobId;
+  }
+
+  @Override
+  public String getType() {
+    return nodeType;
+  }
+
+  @Override
+  public String getPact() {
+    return pact;
+  }
+
+  @Override
+  public String getContents() {
+    return contents;
+  }
+
+  @Override
+  public String getParallelism() {
+    return parallelism+"";
+  }
+
+  @Override
+  public String getDriverStrategy() {
+    return driverStrategy;
+  }
+
+  @Override
+  public GlobalProperties getGlobalProperties() {
+    return globalProperties;
+  }
+
+  @Override
+  public LocalProperties getLocalProperties() {
+    return localProperties;
+  }
+
+  @Override
+  public Estimates getEstimates() {
+    return estimates;
+  }
+
+  @Override
+  public Costs getCosts() {
+    return costs;
+  }
+
+  @Override
+  public CompilerHints getCompilerHints() {
+    return compilerHints;
+  }
+
+  @Override
+  public Predecessor[] getPredecessors() {
+    return predecessors;
   }
 }

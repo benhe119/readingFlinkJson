@@ -1,9 +1,9 @@
 package it.giacomobergami.readingFlinkJson.node;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Metric;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Subtask;
-import it.giacomobergami.readingFlinkJson.nodes.fields.Timestamp;
+import it.giacomobergami.readingFlinkJson.node.fields.Metric;
+import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
+import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
 /**
  * Definition of one node within the task carrying out the computation

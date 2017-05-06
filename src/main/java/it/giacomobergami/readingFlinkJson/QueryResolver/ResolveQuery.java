@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.giacomobergami.readingFlinkJson.ComputationGraph;
+import it.giacomobergami.readingFlinkJson.GsonCommon;
 import it.giacomobergami.readingFlinkJson.node.Vertex;
 
 import java.io.BufferedReader;
@@ -18,11 +19,9 @@ import java.net.URL;
 public class ResolveQuery {
 
   private String remoteSeriviceHostWithPort;
-  private Gson gson;
 
   public ResolveQuery(String remoteSeriviceHostWithPort) {
     this.remoteSeriviceHostWithPort = remoteSeriviceHostWithPort;
-    this.gson = new GsonBuilder().create();
   }
 
   private String getQueryResult(String fullPath) throws IOException {
@@ -37,29 +36,55 @@ public class ResolveQuery {
   }
 
   public ComputationGraph getFullPlan(String jsonQueryPlan, String jobId) throws IOException {
-    return ComputationGraph
+    ComputationGraph toret =  ComputationGraph
       .createComputationGraphFromCompilerHint(jsonQueryPlan)
       .updateComputationGraphFromAjaxQuery(getQueryResult("/jobs/"+jobId+"/vertices"));
+    /*Vertex[] vertices = toret.getVertices();
+    for (int i=0; i<vertices.length; i++) {
+      updateVertexInformationWithFurtherQueries(jobId, vertices[i]);
+    }*/
+    int len = toret.getNumberOfNodes();
+    for (int i=0; i<len; i++) {
+      updateVertexInformationWithFurtherQueries(jobId, toret, i);
+    }
+    return toret;
   }
 
   public ComputationGraph resolveRemoveComputationGraph(String jobId) throws IOException {
     String json = getQueryResult("/jobs/"+jobId+"/vertices");
     ComputationGraph toret = ComputationGraph.createComputationGraphFromAjaxQuery(json);
-    Vertex[] vertices = toret.getVertices();
-    for (int i=0; i<vertices.length; i++) {
-      updateVertex(jobId, vertices[i]);
+    int len = toret.getNumberOfNodes();
+    for (int i=0; i<len; i++) {
+      updateVertexInformationWithFurtherQueries(jobId, toret, i);
     }
     return toret;
   }
 
-  public void updateVertex(String jobId, Vertex toUpdateWithSubtasks) throws IOException  {
+  public void updateVertexInformationWithFurtherQueries(String jobId, ComputationGraph toret, int
+    pos)
+    throws IOException  {
+
+    String nodeJid = toret.getNodeJid(pos);
+    String json = getQueryResult("/jobs/"+jobId+"/vertices/" + nodeJid);
+    Type fileType = new TypeToken<Vertex>(){}.getType();
+    Vertex l = GsonCommon.GSON.fromJson(json, fileType);
+    toret.updateVertexInPosWithSubtasks(pos, l.getSubtasks());
+
+    json = getQueryResult("/jobs/"+jobId+"/vertices/" + nodeJid + "/subtasktimes");
+    l = GsonCommon.GSON.fromJson(json, fileType);
+    toret.updateVertexInPosWithSubtasksWithTimestamp(pos, l.getSubtasks());
+  }
+
+  public void updateVertexInformationWithFurtherQueries(String jobId, Vertex toUpdateWithSubtasks)
+    throws IOException  {
+
     String json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId());
     Type fileType = new TypeToken<Vertex>(){}.getType();
-    Vertex l = gson.fromJson(json, fileType);
+    Vertex l = GsonCommon.GSON.fromJson(json, fileType);
     toUpdateWithSubtasks.setSubtasks(l.getSubtasks());
 
     json = getQueryResult("/jobs/"+jobId+"/vertices/" + toUpdateWithSubtasks.getId() + "/subtasktimes");
-    l = gson.fromJson(json, fileType);
+    l = GsonCommon.GSON.fromJson(json, fileType);
     toUpdateWithSubtasks.updateSubtaskWithTimestamp(l.getSubtasks());
   }
 

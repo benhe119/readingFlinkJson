@@ -1,18 +1,17 @@
 package it.giacomobergami.readingFlinkJson.node;
 
-import it.giacomobergami.readingFlinkJson.Predecessor;
-import it.giacomobergami.readingFlinkJson.Utils;
-import it.giacomobergami.readingFlinkJson.namevalues.CompilerHints;
-import it.giacomobergami.readingFlinkJson.namevalues.Costs;
-import it.giacomobergami.readingFlinkJson.namevalues.Estimates;
-import it.giacomobergami.readingFlinkJson.namevalues.GlobalProperties;
-import it.giacomobergami.readingFlinkJson.namevalues.LocalProperties;
-import it.giacomobergami.readingFlinkJson.nodes.NodeType;
+
+import it.giacomobergami.readingFlinkJson.node.fields.Predecessor;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.CompilerHints;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Costs;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Estimates;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.GlobalProperties;
+import it.giacomobergami.readingFlinkJson.node.fields.namevalues.LocalProperties;
 
 /**
  * Created by vasistas on 20/04/17.
  */
-public class Node {
+public class Node implements INode{
   public int id; //
   public String jid; //
   String type; //
@@ -78,10 +77,68 @@ public class Node {
     return id;
   }
 
-  public void updateWith(Node node) {
-    id = Utils.checkAssignEqual(id, node.id);
-    jid = Utils.checkAssignEqual(jid, node.jid);
-    this.type = node.type;
-    this.pact = node.pact;
+  @Override
+  public int getId() {
+    return id;
+  }
+
+  @Override
+  public String getJid() {
+    return jid;
+  }
+
+  @Override
+  public String getType() {
+    return type;
+  }
+
+  @Override
+  public String getPact() {
+    return pact;
+  }
+
+  @Override
+  public String getContents() {
+    return contents;
+  }
+
+  @Override
+  public String getParallelism() {
+    return parallelism;
+  }
+
+  @Override
+  public String getDriverStrategy() {
+    return driverStrategy;
+  }
+
+  @Override
+  public GlobalProperties getGlobalProperties() {
+    return globalProperties;
+  }
+
+  @Override
+  public LocalProperties getLocalProperties() {
+    return localProperties;
+  }
+
+  @Override
+  public Estimates getEstimates() {
+    return estimates;
+  }
+
+  @Override
+  public Costs getCosts() {
+    return costs;
+  }
+
+  @Override
+  public CompilerHints getCompilerHints() {
+    return compilerHints;
+  }
+
+  @Override
+  public Predecessor[] getPredecessors() {
+    return predecessors;
   }
 }

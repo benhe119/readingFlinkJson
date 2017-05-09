@@ -138,6 +138,11 @@ public class ComputationGraph {
     return this;
   }
 
+  /**
+   * Creates the graph using only the ajax query result
+   * @param json  Result of the query to be parsed
+   * @return      Associated computation graph
+   */
   public static ComputationGraph createComputationGraphFromAjaxQuery(String json) {
     Type fileType = new TypeToken<Job>(){}.getType();
     HashMap<Integer, INode> nodeHashMap = new HashMap<>();
@@ -161,39 +166,11 @@ public class ComputationGraph {
     return new ComputationGraph(nodeHashMap, jidConversion, l);
   }
 
-  public long exchangedMessagesCardinality() {
-    return nodeHashMap
-      .values()
-      .stream()
-      .mapToLong(x -> x.getEstimates().getCardinality().orElseGet(() -> 0L))
-      .sum();
-  }
-
-  public long exchangedMessagesSize() {
-    return nodeHashMap
-      .values()
-      .stream()
-      .mapToLong(x -> x.getEstimates().getOutputSize().orElseGet(() -> 0L))
-      .sum();
-  }
-
-  public Object getDiskIO() {
-    return nodeHashMap.values().stream().mapToLong(x -> x.getCosts().getDiskIO().orElseGet(() -> 0L))
-      .sum();
-  }
-
   public Stream<INode> extimateSources() {
     return nodeHashMap.entrySet()
       .stream()
       .filter(x -> x.getValue().hasPredecessors())
       .map(Map.Entry::getValue);
-  }
-
-  public String getAdjacencyListAsString() {
-    return nodeHashMap.entrySet().stream()
-      .filter(x -> x.getValue().hasPredecessors())
-      .flatMap(x -> Arrays.stream(x.getValue().getPredecessors()).map(y -> x.getKey()+" "+y.jid))
-      .collect(Collectors.joining("\n"));
   }
 
   public Pair<Integer, Set<Integer>> ingoingElements(Map.Entry<Integer, INode> x) {
@@ -204,16 +181,6 @@ public class ComputationGraph {
         new Pair<>(x.getKey(), Arrays.stream(x.getValue().getPredecessors()).map(y -> y.getId(jidConversion))
           .collect
           (Collectors.toSet()));
-  }
-
-  public static HashMap<Integer, Set<Integer>> updateWithElement(HashMap<Integer, Set<Integer>> m,
-    Integer qKey, Set<Integer> qValue) {
-    if (m.containsKey(qKey)) {
-      m.get(qKey).addAll(qValue);
-    } else {
-      m.put(qKey, qValue);
-    }
-    return m;
   }
 
   public Map<Integer, Set<Integer>> getAdjacencyList() {
@@ -307,30 +274,6 @@ public class ComputationGraph {
         (0.0))
       .max(Double::compareTo)
       .orElse(0.0);
-  }
-
-  public  double getRatio(int x, Map<Integer, Set<Integer>> adjList, int nextLevel, HashMap<Integer,
-    ArrayList<Node>> levels) {
-    Set<Integer> out = new HashSet<>(adjList.get(x));
-    double max = out.size();
-    if (max == 0.0) return  0.0;
-    out.removeAll(levels.get(nextLevel).stream().map(n -> n.id).collect(Collectors.toList()));
-    return ((double)out.size()) / max;
-  }
-
-  public double getNodeInformationLevelwise(HashMap<Integer, ArrayList<Node>> levels,
-    Function<Node, Double> function) {
-    return levels.entrySet().stream()
-      .map(x -> x.getValue().stream().map(y ->
-        function.apply(y) * getRatio(y.id, getAdjacencyList(), x.getKey()+1, levels)).max(Double::compareTo).orElse(0.0)
-      )
-      .max(Double::compareTo)
-      .orElse(0.0);
-  }
-
-  public double getMessageTime(double speedFactor) {
-    return getNodeInformation(mapLevelToElements(),
-                              x -> x.getEstimates().getOutputSize().orElse(0L).doubleValue() * speedFactor);
   }
 
   /*

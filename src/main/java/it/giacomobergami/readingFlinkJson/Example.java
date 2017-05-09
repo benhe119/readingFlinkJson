@@ -18,7 +18,7 @@
  */
 package it.giacomobergami.readingFlinkJson;
 
-import it.giacomobergami.readingFlinkJson.QueryResolver.ResolveQuery;
+import it.giacomobergami.readingFlinkJson.get.ResolveQuery;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -50,9 +50,6 @@ public class Example {
 
     // Serializing all the informations as a json file
     File f = new File(arguments.get(0)+"Complete");
-    if (f.exists()) {
-      f.delete();
-    }
     Files.write(f.toPath(), cg.toJsonString().getBytes(Charset.forName("UTF-8")),
       StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
   }

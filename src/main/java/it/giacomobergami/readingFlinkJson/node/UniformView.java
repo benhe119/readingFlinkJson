@@ -34,10 +34,10 @@ public class UniformView implements IUniformView {
   private String state;
 
   @SerializedName("start-time")
-  private String start_time;
+  private long start_time;
 
   @SerializedName("end-time")
-  private String end_time;
+  private long end_time;
   private long duration;
   private long now;
   private Timestamp timestamps;
@@ -48,7 +48,7 @@ public class UniformView implements IUniformView {
    * finer shaded information, you should visit the other nodes.
    */
   private Timestamp statusCounts;
-  private NodeVertex[] uniformVertexView;
+  private Task[] uniformVertexView;
 
   public UniformView(Job job) {
     this.jid = job.jid;
@@ -61,7 +61,7 @@ public class UniformView implements IUniformView {
     this.now = job.now;
     this.timestamps = job.timestamps;
     this.statusCounts = job.statusCounts;
-    this.uniformVertexView = new NodeVertex[job.getVertices().length];
+    this.uniformVertexView = new Task[job.getVertices().length];
     for (int i=0; i<uniformVertexView.length; i++) {
       uniformVertexView[i] = job.getSummarizedView(i);
     }
@@ -93,12 +93,12 @@ public class UniformView implements IUniformView {
   }
 
   @Override
-  public String getStart_time() {
+  public Long getStart_time() {
     return start_time;
   }
 
   @Override
-  public String getEnd_time() {
+  public Long getEnd_time() {
     return end_time;
   }
 

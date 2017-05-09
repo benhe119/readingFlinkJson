@@ -23,7 +23,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Metrics that could be obtained for each Node/Vertex or subtask performing a computation
  */
-public class Metric {
+public class DataMetrics {
   @SerializedName("read-bytes")
   public long readedBytes;
 

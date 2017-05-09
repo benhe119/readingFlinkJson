@@ -26,17 +26,22 @@ import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Costs;
 import it.giacomobergami.readingFlinkJson.node.fields.namevalues.Estimates;
 import it.giacomobergami.readingFlinkJson.node.fields.namevalues.GlobalProperties;
 import it.giacomobergami.readingFlinkJson.node.fields.namevalues.LocalProperties;
-import it.giacomobergami.readingFlinkJson.node.fields.Metric;
+import it.giacomobergami.readingFlinkJson.node.fields.DataMetrics;
 import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
 import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
 /**
  * Unifying the Node and Vertex information into one
  */
-public class NodeVertex implements INode {
+public class Task implements INode {
   //// IDENTIFICATION
   public int id;
   public String jobId;
+
+  public String getName() {
+    return name;
+  }
+
   public String name;
 
   //// DEFINITION
@@ -48,6 +53,18 @@ public class NodeVertex implements INode {
   public int parallelism;
   public String status;
 
+  public long getStartTime() {
+    return startTime;
+  }
+
+  public long getEndTime() {
+    return endTime;
+  }
+
+  public long getDuration() {
+    return duration;
+  }
+
   /// STATISTICS
   @SerializedName("start-time")
   public long startTime;
@@ -56,7 +73,7 @@ public class NodeVertex implements INode {
   public long now;
   public long duration;
   public Timestamp tasks;
-  public Metric metrics;
+  public DataMetrics metrics;
   public Subtask[] subtasks;
 
   //// OPTIMIZER
@@ -70,7 +87,7 @@ public class NodeVertex implements INode {
   //// COMPUTATION
   public Predecessor[] predecessors;
 
-  public NodeVertex(Vertex v, Node n) {
+  public Task(Vertex v, Node n) {
     this.id = n.id;
     this.jobId = Utils.checkAssignEqual(v.getId(), n.jid);
     this.name = v.name;

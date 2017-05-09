@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with readingFlinkJson. If not, see <http://www.gnu.org/licenses/>.
  */
-package it.giacomobergami.readingFlinkJson.QueryResolver;
+package it.giacomobergami.readingFlinkJson.get;
 
 import com.google.gson.reflect.TypeToken;
 import it.giacomobergami.readingFlinkJson.ComputationGraph;

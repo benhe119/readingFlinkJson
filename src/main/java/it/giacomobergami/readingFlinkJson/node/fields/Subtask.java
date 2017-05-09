@@ -25,28 +25,28 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Subtask {
 
-  private long subtask;
+  public long subtask;
 
-  private String status;
+  public String status;
 
-  private long attempt;
+  public long attempt;
 
-  private String host;
+  public String host;
 
   @SerializedName("start-time")
-  private long startTime;
+  public long startTime;
 
   @SerializedName("end-time")
-  private long endTime;
+  public long endTime;
 
   /**
    * Difference between start time and end time
    */
-  private long duration;
+  public long duration;
 
-  private Metric metric;
+  public DataMetrics metrics;
 
-  private Timestamp timestamps;
+  public Timestamp timestamps;
 
   public Timestamp getTimestamp() {
     return timestamps;

@@ -35,10 +35,10 @@ public class Job implements IUniformView {
   public String state;
 
   @SerializedName("start-time")
-  public String start_time;
+  public long start_time;
 
   @SerializedName("end-time")
-  public String end_time;
+  public long end_time;
   public long duration;
   public long now;
   public Timestamp timestamps;
@@ -61,7 +61,7 @@ public class Job implements IUniformView {
     plan.getNodes()[pos].pact = n.pact;
   }
 
-  public NodeVertex getSummarizedView(int pos) {
+  public Task getSummarizedView(int pos) {
     Vertex v = Utils.findByProperty(vertices, x -> x.id.equals(plan.getNodes()[pos].id));
     Node n = new Node(pos, plan.getNodes()[pos]);
     return new NodeVertexWithNodeUpdate(v, n, this, pos);
@@ -101,12 +101,12 @@ public class Job implements IUniformView {
   }
 
   @Override
-  public String getStart_time() {
+  public Long getStart_time() {
     return start_time;
   }
 
   @Override
-  public String getEnd_time() {
+  public Long getEnd_time() {
     return end_time;
   }
 

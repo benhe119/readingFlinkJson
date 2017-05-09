@@ -33,9 +33,9 @@ public interface IUniformView {
 
   String getState();
 
-  String getStart_time();
+  Long getStart_time();
 
-  String getEnd_time();
+  Long getEnd_time();
 
   long getDuration();
 

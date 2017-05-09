@@ -21,7 +21,7 @@ package it.giacomobergami.readingFlinkJson.node;
 /**
  * Created by vasistas on 06/05/17.
  */
-public class NodeVertexWithNodeUpdate extends NodeVertex {
+public class NodeVertexWithNodeUpdate extends Task {
 
   private transient Job father;
   private transient int pos;

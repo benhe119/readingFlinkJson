@@ -46,7 +46,7 @@ public class Timestamp {
   public long cancelling;
 
   @SerializedName("CANCELED")
-  public long canceled;
+  public long cancelled;
 
   @SerializedName("FINISHED")
   public long finished;

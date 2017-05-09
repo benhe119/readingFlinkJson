@@ -19,7 +19,7 @@
 package it.giacomobergami.readingFlinkJson.node;
 
 import com.google.gson.annotations.SerializedName;
-import it.giacomobergami.readingFlinkJson.node.fields.Metric;
+import it.giacomobergami.readingFlinkJson.node.fields.DataMetrics;
 import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
 import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
@@ -44,7 +44,7 @@ public class Vertex {
 
   public Timestamp tasks;
 
-  public Metric metrics;
+  public DataMetrics metrics;
 
   public Subtask[] subtasks;
 

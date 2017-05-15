@@ -13,11 +13,11 @@ public class UniformViewCsvWriter extends CsvWriter<UniformView> {
     super();
     register("file", x -> filename);
     register("jobId", UniformView::getJid);
-    register("runningNodes", UniformView::getVertexViewSize);
     register("duration", UniformView::getDuration);
     register("start", UniformView::getStart_time);
     register("end", UniformView::getEnd_time);
     register("status", UniformView::getState);
+    register("numTasks", UniformView::getVertexViewSize);
     register("processStatusCreated", uv -> uv.getStatusCounts().created);
     register("processStatusDeploying", uv -> uv.getStatusCounts().deploying);
     register("processStatusScheduled", uv -> uv.getStatusCounts().scheduled);

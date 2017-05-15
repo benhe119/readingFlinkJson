@@ -22,6 +22,7 @@ public class TaskCsvWriter extends CsvWriter<Task> {
     register("startTime", Task::getStartTime);
     register("endTime", Task::getEndTime);
     register("duration", Task::getDuration);
+    register("numSubtasks", uv -> uv.subtasks.length);
     register("readedtBytes", x -> x.metrics.readedBytes);
     register("readedtRecords", x -> x.metrics.readedRecords);
     register("writtentBytes", x -> x.metrics.writedBytes);

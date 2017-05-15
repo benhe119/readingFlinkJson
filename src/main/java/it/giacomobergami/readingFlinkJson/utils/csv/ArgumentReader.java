@@ -27,6 +27,7 @@ public class ArgumentReader<K> {
 
   public String valueOrElseConstant(K object, Supplier<Object> constant) {
     Object o = (hasFunction ? function.apply(object) : constant.get());
-    return o!=null ? "\""+o.toString()+"\"" : "";
+    boolean isNumber = o.toString().matches("-?\\d+(\\.\\d+)?");
+    return (isNumber ? "" : "\"") + o.toString() + (isNumber ? "" : "\"");
   }
 }

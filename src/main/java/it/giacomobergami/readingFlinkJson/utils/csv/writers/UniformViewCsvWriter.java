@@ -1,16 +1,25 @@
 package it.giacomobergami.readingFlinkJson.utils.csv.writers;
 
-import it.giacomobergami.readingFlinkJson.node.Job;
 import it.giacomobergami.readingFlinkJson.node.UniformView;
 import it.giacomobergami.readingFlinkJson.utils.csv.CsvWriter;
+import it.giacomobergami.readingFlinkJson.utils.queries.ActualRunningSubtasks;
+import it.giacomobergami.readingFlinkJson.utils.queries.ActualRunningTime;
+import it.giacomobergami.readingFlinkJson.utils.queries.ActualRunningTimeNoIdling;
 
 /**
  * Created by vasistas on 09/05/17.
  */
 public class UniformViewCsvWriter extends CsvWriter<UniformView> {
 
+  private final ActualRunningSubtasks ars;
+  private final ActualRunningTime art;
+  private final ActualRunningTimeNoIdling artni;
+
   public UniformViewCsvWriter(String filename) {
     super();
+    ars = new ActualRunningSubtasks();
+    art = new ActualRunningTime(ars);
+    artni =  new ActualRunningTimeNoIdling(ars);
     register("file", x -> filename);
     register("jobId", UniformView::getJid);
     register("duration", UniformView::getDuration);
@@ -38,6 +47,17 @@ public class UniformViewCsvWriter extends CsvWriter<UniformView> {
     register("timeuvCancelled", uv -> uv.getTimestamps().cancelled);
     register("timeuvRestarting", uv -> uv.getTimestamps().restarting);
     register("timeuvSuspended", uv -> uv.getTimestamps().suspended);
+    // Some relevant informations retrieved through queries
+    register("noSourceSinkDuration", art::apply);
+    register("noSourceSink_noIdleDuration", artni::apply);
+    register("problemDebug", x -> {
+      Long l = art.apply(x);
+      if (l > x.getDuration()) {
+        System.err.println(filename);
+        return true;
+      }
+      return false;
+    });
   }
 
 }

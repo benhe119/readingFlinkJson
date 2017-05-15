@@ -21,6 +21,8 @@ package it.giacomobergami.readingFlinkJson.node;
 import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
 import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
+import java.util.stream.Stream;
+
 /**
  * Created by vasistas on 06/05/17.
  */
@@ -49,9 +51,11 @@ public interface IUniformView {
 
   int getVertexViewSize();
 
-  INode getNode(int pos);
+  Task getNode(int pos);
 
   void updateVertexInPosWithSubtasks(int pos, Subtask[] subtasks);
 
   void updateVertexInPosWithSubtasksWithTimestamp(int pos, Subtask[] subtasks);
+
+  Stream<Task> getNodes();
 }

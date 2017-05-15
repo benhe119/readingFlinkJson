@@ -2,6 +2,7 @@ package it.giacomobergami.readingFlinkJson;
 
 import it.giacomobergami.readingFlinkJson.node.UniformView;
 import it.giacomobergami.readingFlinkJson.utils.csv.writers.CsvSerializer;
+import it.giacomobergami.readingFlinkJson.utils.csv.writers.UniformViewCsvWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +21,7 @@ public class Surfing {
     File b = new File("/Users/vasistas/2.csv");
     File c = new File("/Users/vasistas/3.csv");
     CsvSerializer ser = new CsvSerializer(a, b, c);
-    ser.serialize(test);
+    ser.serialize(test, new UniformViewCsvWriter(test));
   }
 
 }

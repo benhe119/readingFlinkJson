@@ -23,6 +23,9 @@ import com.google.gson.annotations.SerializedName;
 import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
 import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /**
  * Created by vasistas on 06/05/17.
  */
@@ -133,7 +136,7 @@ public class UniformView implements IUniformView {
   }
 
   @Override
-  public INode getNode(int pos) {
+  public Task getNode(int pos) {
     return uniformVertexView[pos];
   }
 
@@ -147,5 +150,10 @@ public class UniformView implements IUniformView {
     for (int i = 0; i < subtasks.length; i++) {
       uniformVertexView[pos].subtasks[i].setTimestamp(subtasks[i].getTimestamp());
     }
+  }
+
+  @Override
+  public Stream<Task> getNodes() {
+    return Arrays.stream(uniformVertexView);
   }
 }

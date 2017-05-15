@@ -41,7 +41,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
                             <mainClass>
-                                it.giacomobergami.readingFlinkJson.Example
+                                it.giacomobergami.readingFlinkJson.examples.RemoteQueryResolvingExample
                             </mainClass>
                             <classpathPrefix>dependency-jars/</classpathPrefix>
                         </manifest>
@@ -80,6 +80,22 @@
             <version>2.8.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+
     </dependencies>
 
 

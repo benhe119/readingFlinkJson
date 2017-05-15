@@ -108,7 +108,7 @@ public class IntervalTreeNode<K, V> implements Iterable<IntervalTreeNode<K, V>> 
         public int compare(K o1, K o2) {
           return o1.compareTo(o2);
         }
-    });
+      });
   }
 
   /**

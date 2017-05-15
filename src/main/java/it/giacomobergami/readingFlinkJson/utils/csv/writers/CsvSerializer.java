@@ -34,9 +34,8 @@ public class CsvSerializer {
     thirdFirst = true;
   }
 
-  public void serialize(String jsonFile) throws
+  public <T extends UniformViewCsvWriter> void serialize(String jsonFile, T uniformViewCsvWriter) throws
     IOException {
-    UniformViewCsvWriter uniformViewCsvWriter = new UniformViewCsvWriter(jsonFile);
     UniformView view = GsonCommon.GSON.fromJson(new FileReader(new File(jsonFile)),
                                                   UniformView.class);
     if (firstFirst) {
@@ -46,7 +45,7 @@ public class CsvSerializer {
     uniformViewCsvWriter.writeToFile(viewFile, view);
     int size = view.getVertexViewSize();
     for (int i = 0; i<size; i++) {
-      Task t = (Task)view.getNode(i);
+      Task t = view.getNode(i);
       TaskCsvWriter writer = new TaskCsvWriter(jsonFile, view);
       if (secondFirst) {
         writer.writeHeaderToFile(taskFile);

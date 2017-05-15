@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with readingFlinkJson. If not, see <http://www.gnu.org/licenses/>.
  */
-package it.giacomobergami.readingFlinkJson;
+package it.giacomobergami.readingFlinkJson.examples;
 
+import it.giacomobergami.readingFlinkJson.ComputationGraph;
 import it.giacomobergami.readingFlinkJson.get.ResolveQuery;
 
 import java.io.File;
@@ -27,9 +28,10 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
- * Created by vasistas on 06/05/17.
+ * Extending the local json obtained from the compiler with the timestamp information that could
+ * be obtained through the restful APIs
  */
-public class Example {
+public class RemoteQueryResolvingExample {
 
   public static void main(String args[]) throws Exception {
     // Reading the arguments from a file, where each line contains one of the following arguments

@@ -17,6 +17,8 @@ public class TaskCsvWriter extends CsvWriter<Task> {
     register("name", Task::getName);
     register("pact", Task::getPact);
     register("type", Task::getType);
+    register("isSource", x -> x.getPact().toLowerCase().contains("source"));
+    register("isSink", x -> x.getPact().toLowerCase().contains("sink"));
     register("parall", Task::getParallelism);
     register("status", x -> x.status);
     register("startTime", Task::getStartTime);

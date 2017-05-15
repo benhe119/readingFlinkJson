@@ -25,6 +25,9 @@ import it.giacomobergami.readingFlinkJson.node.fields.Plan;
 import it.giacomobergami.readingFlinkJson.node.fields.Subtask;
 import it.giacomobergami.readingFlinkJson.node.fields.Timestamp;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 /**
  * Created by vasistas on 06/05/17.
  */
@@ -141,7 +144,7 @@ public class Job implements IUniformView {
   }
 
   @Override
-  public INode getNode(int pos) {
+  public Task getNode(int pos) {
     return getSummarizedView(pos);
   }
 
@@ -153,5 +156,10 @@ public class Job implements IUniformView {
   @Override
   public void updateVertexInPosWithSubtasksWithTimestamp(int pos, Subtask[] subtasks) {
     vertices[pos].updateSubtaskWithTimestamp(subtasks);
+  }
+
+  @Override
+  public Stream<Task> getNodes() {
+    return Stream.iterate(0, x -> x+1).limit(getVertexViewSize()).map(this::getNode);
   }
 }
